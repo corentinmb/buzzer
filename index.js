@@ -6,7 +6,7 @@ const app = express();
 const server = http.Server(app);
 const io = socketio(server);
 
-const title = 'Buffer Buzzer'
+const title = 'Remote Quiz'
 
 let data = {
   users: new Set(),
@@ -27,17 +27,24 @@ app.set('view engine', 'pug')
 app.get('/', (req, res) => res.render('index', { title }))
 app.get('/host', (req, res) => res.render('host', Object.assign({ title }, getData())))
 
+function logUsers() {
+  console.log("Current players : " + JSON.stringify([...data.users]))
+}
+
 io.on('connection', (socket) => {
+  var userId;
   socket.on('join', (user) => {
-    data.users.add(user.id)
-    io.emit('active', [...data.users].length)
-    console.log(`${user.name} joined!`)
+    console.log(JSON.stringify(user) + " joined !")
+    userId = user.id
+    data.users.add(userId)
+    io.emit('active', data.users.size)
+    logUsers()
   })
 
   socket.on('buzz', (user) => {
     data.buzzes.add(`${user.name}-${user.team}`)
     io.emit('buzzes', [...data.buzzes])
-    console.log(`${user.name} buzzed in!`)
+    console.log(`${user.name} a buzzé !`)
   })
 
   socket.on('clear', () => {
@@ -45,6 +52,13 @@ io.on('connection', (socket) => {
     io.emit('buzzes', [...data.buzzes])
     console.log(`Clear buzzes`)
   })
+
+  socket.on('disconnect', function() {
+    console.log(`${userId} disconnect ! `);
+    data.users.delete(userId)
+    io.emit('active', data.users.size)
+    logUsers()
+ });
 })
 
 server.listen(8090, () => console.log('Listening on 8090'))

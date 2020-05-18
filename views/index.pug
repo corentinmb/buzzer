@@ -6,21 +6,18 @@ html
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:500,700|Roboto:400,500,700,900")
     link(rel="stylesheet" href='/style.css')
   body.js-body
-    header
-      img.logo(src='/buzzer-logo.svg')
-
     div.container
       form.view.js-join
-        img(src="/lets-play.png" class="main-image")
-        h2="Let's play!"
-        input(type='text' name='name' placeholder='Your name' required='required')
-        input(type='number' name='team' placeholder='Your team number' required='required')
-        button(type='submit')='Join!'
+        img.logo(src='https://upload.wikimedia.org/wikipedia/fr/7/72/Burger_Quiz.png')
+        h2="Remote Quiz @ Ippon"
+        input(type='text' name='name' placeholder='Votre pseudo' required='required')
+        input(type='number' name='team' placeholder='Votre équipe' required='required')
+        button(type='submit')='Rejoindre !'
 
       div.view.js-joined.hidden
-        button.js-buzzer.buzzer()='Buzz!!!'
+        button.js-buzzer.buzzer()='Buzzer !'
         p.js-joined-info=""
-        button.js-edit.secondary='Change teams'
+        button.js-edit.secondary='Changer d\'équipe'
 
     script(src='/socket.io/socket.io.js')
     script(src='/join.js')

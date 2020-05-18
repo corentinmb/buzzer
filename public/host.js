@@ -4,7 +4,13 @@ const buzzList = document.querySelector('.js-buzzes')
 const clear = document.querySelector('.js-clear')
 
 socket.on('active', (numberActive) => {
-  active.innerText = `${numberActive} joined`
+  if(numberActive == 0){
+    active.innerText=`Aucun joueur`
+  } else if(numberActive == 1){
+    active.innerText=`1 joueur`
+  } else if(numberActive > 1){
+    active.innerText=`${numberActive} joueurs`
+  } 
 })
 
 socket.on('buzzes', (buzzes) => {
@@ -13,7 +19,7 @@ socket.on('buzzes', (buzzes) => {
       const p = buzz.split('-')
       return { name: p[0], team: p[1] }
     })
-    .map(user => `<li>${user.name} on Team ${user.team}</li>`)
+    .map(user => `<li>${user.name} dans l'équipe ${user.team}</li>`)
     .join('')
 })
 

@@ -6,14 +6,19 @@ html
     link(rel="stylesheet" href='/style.css')
   body
     header
-      img.logo(src='/buzzer-logo.svg')
+      img.logo(src='https://upload.wikimedia.org/wikipedia/fr/7/72/Burger_Quiz.png')
 
     div.container
-      h2.js-active=`${users.length} joined`
+      if users.length == 0
+        h2.js-active=`Aucun joueur `
+      else if users.length == 1
+        h2.js-active=`1 joueur`
+      else if users.length > 1
+        h2.js-active=`${users.length} joueurs`
       ol.js-buzzes
         each buzz in buzzes
-          li=`${buzz.name} on Team ${buzz.team}`
-      button.js-clear='Clear buzzes'
+          li=`${buzz.name} de la team ${buzz.team}`
+      button.js-clear='Réinitialiser les buzzers'
 
     script(src='/socket.io/socket.io.js')
     script(src='/host.js')
