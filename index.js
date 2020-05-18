@@ -61,4 +61,7 @@ io.on('connection', (socket) => {
  });
 })
 
-server.listen(8090, () => console.log('Listening on 8090'))
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
