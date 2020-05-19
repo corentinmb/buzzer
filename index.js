@@ -1,10 +1,13 @@
 const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
+const basicAuth = require('express-basic-auth');
+const dotenv = require('dotenv').config();
 
 const app = express();
 const server = http.Server(app);
 const io = socketio(server);
+
 
 const title = 'Remote Quiz'
 
@@ -34,7 +37,10 @@ app.use(express.static('public'))
 app.set('view engine', 'pug')
 
 app.get('/', (req, res) => res.render('index', Object.assign({ title }, getData())))
-app.get('/host', (req, res) => res.render('host', Object.assign({ title }, getData())))
+app.get('/host', basicAuth({
+  users: { admin: process.env.ADMIN_BUZZER_PASSWORD },
+  challenge: true // <--- needed to actually show the login dialog!
+}), (req, res) => res.render('host', Object.assign({ title }, getData())))
 
 function logUsers() {
   console.log("Current players : ")

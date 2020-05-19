@@ -11,7 +11,9 @@
   "author": "Dan Farrelly <daniel.j.farrelly@gmail.com> (http://danfarrelly.nyc)",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "4.14.1",
+    "express-basic-auth": "^1.2.0",
     "pug": "2.0.0-beta11",
     "socketio": "1.0.0"
   },
