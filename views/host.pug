@@ -3,6 +3,7 @@ html
   head
     title=title
     meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:500,700|Roboto:400,500,700,900")
     link(rel="stylesheet" href='/style.css')
   body
     header
@@ -15,10 +16,16 @@ html
         h2.js-active=`1 joueur`
       else if users.length > 1
         h2.js-active=`${users.length} joueurs`
-      ol.js-buzzes
-        each buzz in buzzes
-          li=`${buzz.name} de la team ${buzz.team}`
+      table(style='width:100%', border='1')
+          tr
+            th.mayo Mayo
+            th.ketchup Ketchup
+          tr
+            td.mayo.usersInMayo
+            td.ketchup.usersInKetchup
       button.js-clear='Réinitialiser les buzzers'
-
+    ol.js-buzzes
+      each buzz in buzzes
+        li.buzzli=`${buzz.name} de la team ${buzz.team}`
     script(src='/socket.io/socket.io.js')
     script(src='/host.js')

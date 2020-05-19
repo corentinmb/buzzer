@@ -10,8 +10,25 @@ html
       form.view.js-join
         img.logo(src='https://upload.wikimedia.org/wikipedia/fr/7/72/Burger_Quiz.png')
         h2="Remote Quiz @ Ippon"
+        div.container
+          if users.length == 0
+            h2.js-active=`Aucun joueur `
+          else if users.length == 1
+            h2.js-active=`1 joueur`
+          else if users.length > 1
+            h2.js-active=`${users.length} joueurs`
+          table(style='width:100%', border='1')
+              tr
+                th.mayo Mayo
+                th.ketchup Ketchup
+              tr
+                td.mayo.usersInMayo
+                td.ketchup.usersInKetchup
         input(type='text' name='name' placeholder='Votre pseudo' required='required')
-        input(type='number' name='team' placeholder='Votre équipe' required='required')
+        input(type='radio' name='team' value='Mayo' required='required' id='mayo-cb')
+        label(for='mayo-cb') Mayo
+        input(type='radio' name='team' value='Ketchup' required='required' id='ketchup-cb')
+        label(for='ketchup-cb') Ketchup
         button(type='submit')='Rejoindre !'
 
       div.view.js-joined.hidden

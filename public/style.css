@@ -53,7 +53,7 @@ header {
 
 .container {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   padding: 1em;
   margin: 0 auto;
 }
@@ -62,8 +62,8 @@ header {
 }
 
 .buzzer-mode {
-  background-color: rgb(16, 21, 78);
-  color: rgb(243, 175, 185);
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
 }
 
 input[type="text"],
@@ -102,6 +102,24 @@ button {
   border: 0;
 }
 
+table, tr, th, td {
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  table-layout: fixed;
+  border-radius: 5px;
+}
+
+.mayo {
+  background-color: #daae0f;
+  height:50px
+}
+
+.ketchup {
+  background-color: #ca2f1e;
+  height:50px
+}
+
 button:hover {
   background-color: rgb(22, 29, 153);
 }
@@ -122,22 +140,39 @@ button:focus {
 .buzzer {
   height: 10em;
   font-size: 2em;
-  background-color: rgb(243, 175, 185);
-  color: rgb(18, 30, 102);
+  background-color: #ca2f1e;
+  color: #fff;
 }
 .buzzer:focus {
   box-shadow: 0 0 0 3px #ABB7FF;
 }
 .buzzer:hover,
 .buzzer:active {
-  background-color: #e97284;
+  background-color: #e46276;
+}
+
+.buzzer:disabled {
+  cursor: not-allowed
 }
 
 .secondary {
-  background-color: #fff;
-  color: rgb(16, 21, 78);
+  background-color:  #3c3dac;
+  color: #88dbf5
 }
 
 .secondary:hover {
-  background-color: rgb(44, 75, 255);
+  background-color: #4a4cac;
+}
+
+li {
+  list-style-type: none;
+}
+
+.js-joined-info {
+  color: #daae0f;
+}
+
+.buzzli {
+  font-size: x-large;
+  text-align: center
 }

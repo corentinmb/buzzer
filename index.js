@@ -13,10 +13,19 @@ let data = {
   buzzes: new Set(),
 }
 
-const getData = () => ({
+function filterTeam(users, team) {
+  let result = users.filter(function (user) {
+    return user.team === team;
+  });
+  console.log(team)
+  console.log(result)
+  return result;
+}
+
+getData = () => ({
   users: [...data.users],
   buzzes: [...data.buzzes].map(b => {
-    const [ name, team ] = b.split('-')
+    const [name, team] = b.split('-')
     return { name, team }
   })
 })
@@ -24,20 +33,27 @@ const getData = () => ({
 app.use(express.static('public'))
 app.set('view engine', 'pug')
 
-app.get('/', (req, res) => res.render('index', { title }))
+app.get('/', (req, res) => res.render('index', Object.assign({ title }, getData())))
 app.get('/host', (req, res) => res.render('host', Object.assign({ title }, getData())))
 
 function logUsers() {
   console.log("Current players : " + JSON.stringify([...data.users]))
 }
 
+function UpdateUsersView() {
+  io.emit('active', data.users.size)
+  io.emit('usersInTeam', { usersInMayo: filterTeam([...data.users], 'Mayo'), usersInKetchup: filterTeam([...data.users], 'Ketchup') })
+}
+
 io.on('connection', (socket) => {
   var userId;
+
   socket.on('join', (user) => {
-    console.log(JSON.stringify(user) + " joined !")
+    console.log(JSON.stringify(user) + " a rejoint !")
     userId = user.id
-    data.users.add(userId)
-    io.emit('active', data.users.size)
+    data.users.add(user)
+    UpdateUsersView()
+    io.emit('checkBuzzerAvailable', [...data.buzzes].find(u => u === (user.name + '-' + user.team)))
     logUsers()
   })
 
@@ -50,18 +66,40 @@ io.on('connection', (socket) => {
   socket.on('clear', () => {
     data.buzzes = new Set()
     io.emit('buzzes', [...data.buzzes])
+    io.emit('disableBuzzer')
     console.log(`Clear buzzes`)
   })
 
-  socket.on('disconnect', function() {
+  socket.on('updateUsersView', () => {
+    UpdateUsersView()
+  })
+
+  // Custom event when the player change team
+  socket.on('changeTeam', function (userSent) {
     console.log(`${userId} disconnect ! `);
-    data.users.delete(userId)
-    io.emit('active', data.users.size)
+    data.users.forEach(function (user) {
+      if (user.id === userSent.id) {
+        data.users.delete(user);
+      }
+    });
+    UpdateUsersView()
     logUsers()
- });
+  });
+
+  // Default event for refresh 
+  socket.on('disconnect', function () {
+    console.log(`${userId} disconnect ! `);
+    data.users.forEach(function (user) {
+      if (user.id === userId) {
+        data.users.delete(user);
+      }
+    });
+    UpdateUsersView()
+    logUsers()
+  });
 })
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`Our app is running on port ${ PORT }`);
+  console.log(`Our app is running on port ${PORT}`);
 });
