@@ -12,11 +12,12 @@ const active = document.querySelector('.js-active')
 let user = {}
 
 const getUserInfo = () => {
-  user = JSON.parse(localStorage.getItem('user')) || {}
+  user = JSON.parse(sessionStorage.getItem('user')) || {}
+  console.log(user)
   return user
 }
 const saveUserInfo = () => {
-  localStorage.setItem('user', JSON.stringify(user))
+  sessionStorage.setItem('user', JSON.stringify(user))
 }
 
 socket.on('active', (numberActive) => {

@@ -25,10 +25,12 @@ html
                 td.mayo.usersInMayo
                 td.ketchup.usersInKetchup
         input(type='text' name='name' placeholder='Votre pseudo' required='required')
-        input(type='radio' name='team' value='Mayo' required='required' id='mayo-cb')
-        label(for='mayo-cb') Mayo
-        input(type='radio' name='team' value='Ketchup' required='required' id='ketchup-cb')
-        label(for='ketchup-cb') Ketchup
+        input(type='radio' name='team' value='Mayo' required='required' id='mayo-cb' class="input-hidden")
+        label(for='mayo-cb') 
+          img(src="./mayo.png")
+        input(type='radio' name='team' value='Ketchup' required='required' id='ketchup-cb' class="input-hidden")
+        label(for='ketchup-cb')
+          img(src="/ketchup.png")
         button(type='submit')='Rejoindre !'
 
       div.view.js-joined.hidden

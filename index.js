@@ -37,7 +37,8 @@ app.get('/', (req, res) => res.render('index', Object.assign({ title }, getData(
 app.get('/host', (req, res) => res.render('host', Object.assign({ title }, getData())))
 
 function logUsers() {
-  console.log("Current players : " + JSON.stringify([...data.users]))
+  console.log("Current players : ")
+  console.log(JSON.stringify([...data.users]))
 }
 
 function UpdateUsersView() {
