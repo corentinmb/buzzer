@@ -5,3 +5,11 @@
 A little buzzer app for running your own quizzes or game shows! Uses websockets to sent messages.
 
 Forked from: https://github.com/bufferapp/buzzer
+
+## Install
+
+`docker build --tag node-docker .`
+
+`docker run -p 3000:3000 burgerquizz`
+
+Or deploy it on a PaaS like Heroku etc...

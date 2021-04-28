@@ -9,6 +9,6 @@ COPY package.json /usr/src/app/
 RUN npm install
 COPY . /usr/src/app
 
-EXPOSE 8090
+EXPOSE 3000
 
 CMD ["node", "./index.js"]
