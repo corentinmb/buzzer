@@ -8,6 +8,8 @@ Forked from: https://github.com/bufferapp/buzzer
 
 ## Install
 
+Create an .env file (or override `Config Vars` in Heroku) with a key ADMIN_BUZZER_PASSWORD and set the password.
+
 `docker build --tag node-docker .`
 
 `docker run -p 3000:3000 burgerquizz`
